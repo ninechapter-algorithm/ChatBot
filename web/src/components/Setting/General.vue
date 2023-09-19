@@ -17,7 +17,7 @@
 
       <div class="flex items-center space-x-4">
         <span class="flex-shrink-0 w-[80px]">{{ t("setting.avatarLink") }}</span>
-        <div class="flex-1">
+        <div class="flex-1 mr-2">
           <el-input v-model="userInfo.avatarUrl" />
         </div>
         <el-button size="small" type="primary" text @click="previewAvatar = true">{{
@@ -237,22 +237,22 @@ const handleImportChats = (event) => {
 
 // 清空对话记录
 const handleClearChats = () => {
-  ElMessageBox.confirm("确定清空对话记录?", "确认操作", {
-    confirmButtonText: "确认",
-    cancelButtonText: "取消",
+  ElMessageBox.confirm(t("chat.clearChatConfirm"), t("chat.clearChat"), {
+    confirmButtonText: t("common.yes"),
+    cancelButtonText: t("common.no"),
     type: "warning",
   })
     .then(() => {
       // 从本地存储中移除对话记录
       localStorage.removeItem("chat-store");
       // 显示成功的消息提示
-      ElMessage.success("已清空对话记录");
+      ElMessage.success(t("common.success"));
       // 刷新页面
       location.reload();
     })
     .catch(() => {
       // 显示取消的消息提示
-      ElMessage.info("取消清空对话记录");
+      ElMessage.info(t("common.canceled"));
     });
 };
 
@@ -269,10 +269,10 @@ const handleClickImportButton = () => {
 const handleUpdateUserInfo = async () => {
   const result = await updateUserInfo(userInfo.value);
   if (result) {
-    ElMessage.success("保存用户信息成功!");
+    ElMessage.success(t("common.success"));
     window.location.reload();
   } else {
-    ElMessage.error("保存用户信息失败!");
+    ElMessage.error(t("common.failed"));
   }
 };
 </script>

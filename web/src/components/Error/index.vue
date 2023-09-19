@@ -24,22 +24,23 @@
 import NoPermission from "@/assets/403.svg";
 import PageError from "@/assets/404.svg";
 import NetworkError from "@/assets/500.svg";
+import { t } from "../../locales";
 
 const errorMap = {
   404: {
     errorImage: PageError,
-    title: "页面丢失",
-    errorMessage: "抱歉, 您访问的页面不存在!",
+    title: t("error.title404"),
+    errorMessage: t("error.message404"),
   },
   500: {
     errorImage: NetworkError,
-    title: "出现错误",
-    errorMessage: "抱歉, 服务器出现错误!",
+    title: t("error.title500"),
+    errorMessage: t("error.message500"),
   },
   403: {
     errorImage: NoPermission,
-    title: "没有权限",
-    errorMessage: "抱歉, 您没有权限访问此页面!",
+    title: t("error.title403"),
+    errorMessage: t("error.message403"),
   },
 };
 
@@ -53,7 +54,7 @@ defineProps({
   },
   buttonText: {
     type: String,
-    default: "返回",
+    default: t("common.back"),
   },
 });
 const emits = defineEmits(["errorOperation"]);

@@ -24,9 +24,11 @@ export default {
     wrong: "好像出错了，请稍后再试。",
     success: "操作成功",
     failed: "操作失败",
+    canceled: "已取消操作",
     verify: "验证",
     unauthorizedTips: "未经授权，请先进行验证。",
     preview: "预览",
+    back: "返回",
   },
   chat: {
     newChatButton: "新建聊天",
@@ -50,6 +52,8 @@ export default {
     clearHistoryConfirm: "确定清空聊天记录?",
     preview: "预览",
     showRawText: "显示原文",
+    start: "嘿! 快输入内容以开始对话吧~",
+    stop: "停止响应",
   },
   setting: {
     setting: "设置",

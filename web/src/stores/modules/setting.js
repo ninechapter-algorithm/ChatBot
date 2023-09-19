@@ -11,12 +11,13 @@ export const useSettingStore = defineStore("settingStore", () => {
   const temperature = ref(0.8);
   const topP = ref(1);
 
-  const getLocalStates = () => {
+  // 从LocalStorage获取状态值
+  (() => {
     const localStates = ss.get(LOCAL_NAME);
     systemMessage.value = localStates.systemMessage ?? systemMessage.value;
     temperature.value = localStates.temperature ?? temperature.value;
     topP.value = localStates.topP ?? topP.value;
-  };
+  })();
 
   const removeLocalStates = () => {
     ss.remove(LOCAL_NAME);
@@ -49,7 +50,6 @@ export const useSettingStore = defineStore("settingStore", () => {
     systemMessage,
     temperature,
     topP,
-    getLocalStates,
     removeLocalStates,
     storeLocalStates,
     updateSettings,

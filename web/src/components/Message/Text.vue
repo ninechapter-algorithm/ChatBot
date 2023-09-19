@@ -22,6 +22,8 @@ import mdKatex from "@traptitech/markdown-it-katex";
 import mila from "markdown-it-link-attributes";
 import hljs from "highlight.js";
 import { copyToClip } from "../../utils/copy";
+import { useMobile } from "../../hooks/useMobile";
+import { t } from "../../locales";
 
 const props = defineProps({
   inversion: {
@@ -45,6 +47,8 @@ const props = defineProps({
   },
 });
 
+const { isMobile } = useMobile();
+
 const textRef = ref();
 
 // 样式计算属性，返回包含一组Tailwind CSS类名的数组
@@ -53,7 +57,7 @@ const wrapClass = computed(() => {
     "text-wrap", // 文本自动换行
     "min-w-[20px]", // 最小宽度为20像素
     "rounded-md", // 圆角边框
-    "px-3 py-2", // 添加水平内边距px-3 垂直内边距py-2
+    isMobile.value ? "p-2" : "px-3 py-2",
     props.inversion ? "bg-[#d1e9f9]" : "bg-[#f4f6f8]", // 如果props.inversion为真，设置背景色为#d2f9d1，否则设置背景色为#f4f6f8
     props.inversion ? "dark:bg-[#95addc]" : "dark:bg-[#1e1e20]", // 如果props.inversion为真，设置暗模式下的背景色为#a1dc95，否则设置暗模式下的背景色为#1e1e20
     props.inversion ? "message-request" : "message-reply", // 如果props.inversion为真，添加类名"message-request"，否则添加类名"message-reply"
@@ -93,7 +97,7 @@ mdi.use(mdKatex, { blockClass: "katexmath-block rounded-md p-[10px]", errorColor
 
 // 生成带有代码高亮样式的代码块
 const highlightBlock = (str, lang) => {
-  return `<pre class="code-block-wrapper"><div class="code-block-header"><span class="code-block-header__lang">${lang}</span><span class="code-block-header__copy">复制代码</span></div><code class="hljs code-block-body ${lang}">${str}</code></pre>`;
+  return `<pre class="code-block-wrapper"><div class="code-block-header"><span class="code-block-header__lang">${lang}</span><span class="code-block-header__copy">${t("chat.copyCode")}</span></div><code class="hljs code-block-body ${lang}">${str}</code></pre>`;
 };
 
 // 定义函数addCopyEvents，用于添加复制代码的事件处理逻辑
@@ -106,9 +110,9 @@ const addCopyEvents = () => {
         const code = btn.parentElement?.nextElementSibling?.textContent; // 获取父元素的下一个兄弟元素的文本内容作为代码
         if (code) {
           copyToClip(code).then(() => {
-            btn.textContent = "复制成功"; // 复制成功后修改按钮文本为"复制成功"
+            btn.textContent = t("common.success"); // 复制成功后修改按钮文本为"复制成功"
             setTimeout(() => {
-              btn.textContent = "复制代码"; // 一秒后恢复按钮文本为"复制代码"
+              btn.textContent = t("chat.copyCode"); // 一秒后恢复按钮文本为"复制代码"
             }, 1000);
           });
         }
