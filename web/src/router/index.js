@@ -16,9 +16,9 @@ const routes = [
     ],
   },
   {
-    path: "/test",
-    name: "Test",
-    component: () => import("../views/Test.vue"),
+    path: "/500",
+    name: "500",
+    component: () => import("../views/errors/500.vue"),
   },
   {
     // 定义路由为/404

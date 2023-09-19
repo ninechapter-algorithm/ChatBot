@@ -63,6 +63,7 @@ import { storeToRefs } from "pinia";
 import { ElMessage } from "element-plus";
 import { useUserStore } from "../../stores";
 import { copyToClip } from "../../utils/copy";
+import { t } from "../../locales";
 
 const props = defineProps({
   inversion: {
@@ -112,7 +113,7 @@ const options = computed(() => {
   const items = [
     {
       key: "copy",
-      title: "复制",
+      title: t("chat.copy"),
       icon: "ri:file-copy-2-line",
       operation: () => {
         handleCopy();
@@ -120,7 +121,7 @@ const options = computed(() => {
     },
     {
       key: "delete",
-      title: "删除",
+      title: t("common.delete"),
       icon: "ri:delete-bin-line",
       operation: () => {
         handleDelete();
@@ -131,7 +132,7 @@ const options = computed(() => {
   if (!props.inversion) {
     items.unshift({
       key: "rawText",
-      title: showAsRawText.value ? "预览" : "原文",
+      title: showAsRawText.value ? t("chat.preview") : t("chat.showRawText"),
       icon: showAsRawText.value ? "ic:outline-code-off" : "ic:outline-code",
       operation: () => {
         toggleRenderType();
@@ -171,11 +172,11 @@ const handleCopy = async () => {
     // 尝试调用copyToClip函数将文本复制到剪贴板
     await copyToClip(props.text || "");
     // 显示成功提示消息
-    ElMessage.success("复制成功!");
+    ElMessage.success(t("common.success"));
   } catch {
     // 复制失败
     // 显示错误提示消息
-    ElMessage.error("复制失败!");
+    ElMessage.error(t("common.failed"));
   }
 };
 

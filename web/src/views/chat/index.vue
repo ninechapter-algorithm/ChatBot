@@ -14,7 +14,7 @@
           <template v-if="!chatSources.length">
             <div class="flex items-center justify-center mt-4 text-center text-neutral-300">
               <SvgIcon name="ri:bubble-chart-fill" class="mr-2 text-3xl" />
-              <span>嘿! 快输入内容以开始对话吧~</span>
+              <span>{{ t("chat.start") }}</span>
             </div>
           </template>
 
@@ -38,7 +38,7 @@
                   <template #icon>
                     <SvgIcon name="ri:stop-circle-line" />
                   </template>
-                  停止响应
+                  {{ t("chat.stop") }}
                 </el-button>
               </div>
             </div>
@@ -179,9 +179,9 @@ const handleDelete = (index) => {
     return;
   }
 
-  ElMessageBox.confirm("是否确认删除此消息?", "删除消息", {
-    confirmButtonText: "是",
-    cancelButtonText: "否",
+  ElMessageBox.confirm(t("chat.deleteMessageConfirm"), t("chat.deleteMessage"), {
+    confirmButtonText: t("common.yes"),
+    cancelButtonText: t("common.no"),
     type: "warning",
   })
     .then(() => {
@@ -190,7 +190,7 @@ const handleDelete = (index) => {
     })
     .catch(() => {
       // 取消删除
-      ElMessage.info("已取消删除消息");
+      ElMessage.info(t("common.success"));
     });
 };
 
@@ -280,7 +280,7 @@ const handleRegenerate = async (index) => {
     await fetchChatAPIOnce();
   } catch (error) {
     // 获取错误信息
-    const errorMessage = error?.message ?? "响应出现错误!";
+    const errorMessage = error?.message ?? t("common.wrong");
 
     // 如果错误原因是主动取消响应
     if (errorMessage === "canceled") {
@@ -334,9 +334,9 @@ const handleClear = () => {
     return;
   }
 
-  ElMessageBox.confirm("是否确认清空该对话?", "清空对话", {
-    confirmButtonText: "是",
-    cancelButtonText: "否",
+  ElMessageBox.confirm(t("chat.clearChatConfirm"), t("chat.clearChat"), {
+    confirmButtonText: t("common.yes"),
+    cancelButtonText: t("common.no"),
     type: "warning",
   })
     .then(() => {
@@ -344,7 +344,7 @@ const handleClear = () => {
       clearChatByUuid(+uuid);
     })
     .catch(() => {
-      ElMessage.info("已取消清空对话");
+      ElMessage.info(t("common.success"));
     });
 };
 
@@ -359,10 +359,10 @@ const handleExport = () => {
 
   // 调用ElMessageBox方法 弹出一个消息框
   ElMessageBox({
-    title: "保存对话为图片",
-    message: "是否确认将对话保存为图片?",
-    confirmButtonText: "是",
-    cancelButtonText: "否",
+    title: t("chat.exportImage"),
+    message: t("chat.exportImageConfirm"),
+    confirmButtonText: t("common.yes"),
+    cancelButtonText: t("common.no"),
     showCancelButton: true,
     // 在消息框关闭之前执行的回调函数
     beforeClose: async (action, instance, done) => {
@@ -371,7 +371,7 @@ const handleExport = () => {
         // 将确认按钮的加载状态设置为true
         instance.confirmButtonLoading = true;
         // 将确认按钮的文本设置为"导出中..."
-        instance.confirmButtonText = "导出中...";
+        instance.confirmButtonText = `${t("common.export")}...`;
         try {
           // 获取id为"image-wrapper"的元素
           const ele = document.getElementById("image-wrapper");
@@ -406,12 +406,12 @@ const handleExport = () => {
           done();
         } catch (error) {
           // 捕获异常，显示导出失败的错误信息
-          ElMessage.error("导出失败!");
+          ElMessage.error(t("chat.exportFailed"));
         } finally {
           // 无论导出成功或失败，都将确认按钮的加载状态设置为false
           instance.confirmButtonLoading = false;
           // 并将按钮文本修改为默认值
-          instance.confirmButtonText = "是";
+          instance.confirmButtonText = t("common.yes");
         }
       } else {
         // 如果点击了取消按钮，则执行beforeClose回调函数的done回调，关闭消息框
@@ -421,11 +421,11 @@ const handleExport = () => {
   })
     .then(() => {
       // 当消息框关闭且用户点击了确认按钮并成功导出时，显示导出成功的消息
-      ElMessage.success("导出成功!");
+      ElMessage.success(t("chat.exportSuccess"));
     })
     .catch(() => {
       // 当消息框关闭且用户点击了取消按钮时，显示已取消导出的消息
-      ElMessage.info("已取消导出");
+      ElMessage.info(t("common.canceled"));
     });
 };
 
@@ -548,7 +548,7 @@ const onConversation = async () => {
     await fetchChatAPIOnce();
   } catch (error) {
     // 获取错误信息
-    const errorMessage = error?.message ?? "响应出现错误!";
+    const errorMessage = error?.message ?? t("common.error");
 
     // 如果错误原因是主动取消响应
     if (errorMessage === "canceled") {

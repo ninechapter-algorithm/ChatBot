@@ -4,10 +4,9 @@
     <div class="p-2 space-y-2 rounded-md bg-neutral-100 dark:bg-neutral-700">
       <p>
         此项目开源于
-        <!-- TODO 修改href -->
         <a
           class="text-blue-600 dark:text-blue-500"
-          href="https://github.com/Chanzhaoyu/chatgpt-web"
+          href="https://github.com/ninechapter-algorithm/ChatBot"
           target="_blank"
         >
           GitHub

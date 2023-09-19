@@ -2,7 +2,7 @@
   <div class="p-4 space-y-5 min-h-[200px]">
     <div class="space-y-6">
       <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[120px]">系统提示词</span>
+        <span class="flex-shrink-0 w-[120px]">{{ t("setting.role") }}</span>
         <div class="flex-1">
           <el-input
             v-model="settings.systemMessage"
@@ -13,7 +13,7 @@
       </div>
 
       <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[120px]">Temperature</span>
+        <span class="flex-shrink-0 w-[120px]">{{ t("setting.temperature") }}</span>
         <div class="flex-1">
           <el-slider v-model="settings.temperature" :max="1" :min="0" :step="0.1" show-stops />
         </div>
@@ -21,7 +21,7 @@
       </div>
 
       <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[120px]">Top_p</span>
+        <span class="flex-shrink-0 w-[120px]">{{ t("setting.top_p") }}</span>
         <div class="flex-1">
           <el-slider v-model="settings.topP" :max="1" :min="0" :step="0.1" show-stops />
         </div>
@@ -29,8 +29,8 @@
       </div>
 
       <div class="flex items-center justify-end space-x-4">
-        <el-button type="info" size="small" @click="handleResetSettings"> 重置 </el-button>
-        <el-button type="primary" size="small" @click="handleUpdateSettings"> 保存 </el-button>
+        <el-button type="info" size="small" @click="handleResetSettings">{{ t("common.reset") }}</el-button>
+        <el-button type="primary" size="small" @click="handleUpdateSettings">{{ t("common.save") }}</el-button>
       </div>
     </div>
   </div>
@@ -42,6 +42,7 @@ import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useSettingStore } from "../../stores";
 import { ElMessage } from "element-plus";
+import { t } from "../../locales";
 
 // 使用设置存储
 const settingStore = useSettingStore();
@@ -63,11 +64,11 @@ const handleUpdateSettings = async () => {
   const result = await updateSettings(settings.value);
   if (result) {
     // 更新成功时显示成功消息并刷新页面
-    ElMessage.success("更新成功!");
+    ElMessage.success(t("common.success"));
     window.location.reload();
   } else {
     // 更新失败时显示错误消息
-    ElMessage.error("更新失败!");
+    ElMessage.error(t("common.failed"));
   }
 };
 
@@ -76,7 +77,7 @@ const handleResetSettings = () => {
   // 调用重置设置的方法
   resetSettings();
   // 显示重置成功消息并刷新页面
-  ElMessage.success("重置成功!");
+  ElMessage.success(t("common.success"));
   window.location.reload();
 };
 </script>
